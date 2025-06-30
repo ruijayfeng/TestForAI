@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>色彩心理学 | 液态数字形态主义</title>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-100-M/font-awesome/6.0.0/js/all.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #7e22ce, #4f46e5, #3b82f6);
+      --secondary-gradient: linear-gradient(135deg, #f472b6, #ec4899, #8b5cf6);
+      --accent-color: #f59e0b;
+      --text-color: #f8fafc;
+      --light-text: rgba(248, 250, 252, 0.8);
+      --dark-bg: #0f172a;
+      --liquid-border: rgba(255, 255, 255, 0.15);
+      --bubble-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background-color: var(--dark-bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .knowledge-card {
+      width: 440px;
+      height: 1280px;
+      background: var(--dark-bg);
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 
+                  0 0 0 10px var(--liquid-border),
+                  0 0 0 20px var(--dark-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    /* 液态背景效果 */
+    .liquid-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .liquid-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--bubble-color);
+      animation: float 20s infinite ease-in-out;
+    }
+    
+    .liquid-shape-1 {
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      left: -50px;
+      background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.1), transparent 70%);
+      animation-delay: 0s;
+    }
+    
+    .liquid-shape-2 {
+      width: 200px;
+      height: 200px;
+      bottom: -50px;
+      right: -100px;
+      background: radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.08), transparent 60%);
+      animation-delay: 5s;
+      animation-duration: 18s;
+    }
+    
+    .liquid-shape-3 {
+      width: 150px;
+      height: 150px;
+      top: 50%;
+      left: 10%;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.06), transparent 50%);
+      animation-delay: 10s;
+      animation-duration: 22s;
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      25% {
+        transform: translate(10%, -15%) rotate(5deg);
+      }
+      50% {
+        transform: translate(20%, 5%) rotate(-5deg);
+      }
+      75% {
+        transform: translate(10%, 15%) rotate(3deg);
+      }
+    }
+    
+    .gradient-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary-gradient);
+      opacity: 0.15;
+      z-index: 1;
+    }
+    
+    /* 内容区域 */
+    .content {
+      position: relative;
+      z-index: 2;
+      padding: 40px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    /* 日期区域 */
+    .date-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      opacity: 0.8;
+      animation: fadeIn 1s ease-in-out;
+    }
+    
+    .date-area i {
+      color: var(--accent-color);
+      font-size: 18px;
+    }
+    
+    .date-text {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      color: var(--text-color);
+    }
+    
+    /* 标题区域 */
+    .title-area {
+      margin-bottom: 30px;
+      animation: fadeIn 1.2s ease-in-out 0.2s both;
+    }
+    
+    .main-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--text-color);
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .main-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--accent-color);
+      border-radius: 3px;
+      transform: skew(-15deg);
+    }
+    
+    .subtitle {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--light-text);
+      line-height: 1.6;
+      max-width: 360px;
+    }
+    
+    /* 引用区块 */
+    .quote-block {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border-left: 3px solid var(--accent-color);
+      padding: 25px 30px;
+      border-radius: 0 8px 8px 0;
+      margin: 30px 0;
+      position: relative;
+      animation: fadeIn 1.4s ease-in-out 0.4s both;
+      backdrop-filter: blur(5px);
+    }
+    
+    .quote-block::before {
+      content: '"';
+      position: absolute;
+      top: -15px;
+      left: 20px;
+      font-size: 60px;
+      color: rgba(255, 255, 255, 0.1);
+      font-family: 'Noto Serif SC', serif;
+    }
+    
+    .quote-text {
+      font-family: 'Noto Serif SC', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--text-color);
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .quote-author {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: 500;
+      color: var(--accent-color);
+      text-align: right;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    
+    /* 核心要点列表 */
+    .key-points {
+      margin: 30px 0;
+      animation: fadeIn 1.6s ease-in-out 0.6s both;
+    }
+    
+    .points-title {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .points-title i {
+      color: var(--accent-color);
+    }
+    
+    .point-item {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+      padding: 18px 25px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .point-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .point-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--secondary-gradient);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .point-item:hover::before {
+      opacity: 1;
+    }
+    
+    .point-number {
+      position: absolute;
+      top: 18px;
+      left: 25px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--secondary-gradient);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: white;
+      opacity: 0.8;
+    }
+    
+    .point-content {
+      position: relative;
+      padding-left: 50px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 15px;
+      color: var(--light-text);
+      line-height: 1.7;
+    }
+    
+    /* 配图区域 */
+    .image-area {
+      width: 100%;
+      height: 240px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 30px 0;
+      position: relative;
+      animation: fadeIn 1.8s ease-in-out 0.8s both;
+    }
+    
+    .liquid-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .liquid-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary-gradient);
+      opacity: 0.2;
+      mix-blend-mode: overlay;
+    }
+    
+    /* 编辑笔记 */
+    .editor-note {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(126, 34, 206, 0.1));
+      padding: 25px;
+      border-radius: 12px;
+      position: relative;
+      animation: fadeIn 2s ease-in-out 1s both;
+    }
+    
+    .editor-note::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--primary-gradient);
+    }
+    
+    .note-title {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .note-title i {
+      color: var(--accent-color);
+    }
+    
+    .note-content {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 14px;
+      color: var(--light-text);
+      line-height: 1.7;
+    }
+    
+    /* 下载按钮 */
+    .download-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+      animation: fadeIn 2.2s ease-in-out 1.2s both;
+    }
+    
+    .download-btn:hover {
+      background: #e89209;
+      transform: translateX(-50%) translateY(-3px);
+    }
+    
+    .download-btn i {
+      transform: scale(0.9);
+    }
+    
+    /* 动画效果 */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 480px) {
+      .knowledge-card {
+        width: 360px;
+        height: auto;
+        max-height: 1400px;
+      }
+      
+      .content {
+        padding: 30px 25px;
+      }
+      
+      .main-title {
+        font-size: 36px;
+      }
+      
+      .quote-block {
+        padding: 20px 20px;
+      }
+      
+      .quote-block::before {
+        font-size: 40px;
+        top: -10px;
+      }
+      
+      .image-area {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="knowledge-card">
+    <div class="liquid-background">
+      <div class="liquid-shape liquid-shape-1"></div>
+      <div class="liquid-shape liquid-shape-2"></div>
+      <div class="liquid-shape liquid-shape-3"></div>
+    </div>
+    <div class="gradient-overlay"></div>
+    
+    <div class="content">
+      <!-- 日期区域 -->
+      <div class="date-area">
+        <i class="far fa-calendar-alt"></i>
+        <div class="date-text">2025年06月30日 星期一</div>
+      </div>
+      
+      <!-- 标题区域 -->
+      <div class="title-area">
+        <h1 class="main-title">色彩心理学</h1>
+        <p class="subtitle">探索颜色如何影响我们的情绪、行为和感知，解码视觉世界的情感语言</p>
+      </div>
+      
+      <!-- 引用区块 -->
+      <div class="quote-block">
+        <p class="quote-text">"色彩是灵魂的语言，每一种色调都传递着超越文字的情感共鸣"</p>
+        <p class="quote-author">— 伊顿·约翰内斯 (Johannes Itten)</p>
+      </div>
+      
+      <!-- 配图区域 -->
+      <div class="image-area">
+        <img src="https://picsum.photos/440/240?random=1" alt="色彩心理学示意图" class="liquid-image">
+        <div class="liquid-overlay"></div>
+      </div>
+      
+      <!-- 核心要点列表 -->
+      <div class="key-points">
+        <h2 class="points-title"><i class="fas fa-list-check"></i> 色彩的情感影响力</h2>
+        
+        <div class="point-item">
+          <div class="point-number">1</div>
+          <div class="point-content">
+            <strong>红色</strong>激发能量与激情，提高心率和肾上腺素分泌，常用于需要唤起强烈情感的场景
+          </div>
+        </div>
+        
+        <div class="point-item">
+          <div class="point-number">2</div>
+          <div class="point-content">
+            <strong>蓝色</strong>传递平静与信任，降低血压和心率，是医疗和科技领域的首选色彩
+          </div>
+        </div>
+        
+        <div class="point-item">
+          <div class="point-number">3</div>
+          <div class="point-content">
+            <strong>绿色</strong>象征自然与康复，缓解视觉疲劳，促进心理平衡，常用于健康和环保主题
+          </div>
+        </div>
+        
+        <div class="point-item">
+          <div class="point-number">4</div>
+          <div class="point-content">
+            <strong>黄色</strong>唤起快乐与创造力，但过亮的黄色可能引发焦虑，需谨慎使用
+          </div>
+        </div>
+        
+        <div class="point-item">
+          <div class="point-number">5</div>
+          <div class="point-content">
+            <strong>紫色</strong>与奢华和创造力相关联，历史上曾是贵族专属色彩，如今常用于创意领域
+          </div>
+        </div>
+      </div>
+      
+      <!-- 编辑笔记 -->
+      <div class="editor-note">
+        <h3 class="note-title"><i class="fas fa-lightbulb"></i> 色彩设计小贴士</h3>
+        <p class="note-content">
+          在设计中应用色彩心理学时，需考虑文化差异：例如红色在西方代表警告，而在东方象征好运；蓝色在多数文化中传递信任，但在某些地区与忧郁相关。<br><br>
+          最佳实践是建立色彩层次：60%主色奠定基调，30%辅助色增加深度，10%强调色突出重点，创造和谐而富有冲击力的视觉体验。
+        </p>
+      </div>
+      
+      <!-- 下载按钮 -->
+      <button class="download-btn" id="downloadBtn">
+        <i class="fas fa-download"></i>
+        <span>下载知识卡片</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // 下载按钮功能 (这里是模拟功能，实际项目中需要更完整的实现)
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+      alert('知识卡片已开始下载\n(实际项目中此处会触发图片下载功能)');
+      // 实际下载功能需要更复杂的实现，可能需要使用html2canvas等库将页面转为图片
+    });
+    
+    // 液态形状动画增强
+    function enhanceLiquidAnimation() {
+      const shapes = document.querySelectorAll('.liquid-shape');
+      shapes.forEach(shape => {
+        const randomDelay = Math.random() * 5;
+        const randomDuration = 15 + Math.random() * 10;
+        shape.style.animationDelay = `${randomDelay}s`;
+        shape.style.animationDuration = `${randomDuration}s`;
+      });
+    }
+    
+    // 页面加载完成后执行
+    window.addEventListener('load', enhanceLiquidAnimation);
+  </script>
+</body>
+</html>
